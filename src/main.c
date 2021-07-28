@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   LTO Network Wallet App for Ledger devices, based on Waves code.
 *   2019-2021 Ignacio Iglesias (iicc) https://github.com/iicc1/ledger-app-lto
-/*******************************************************************************
+********************************************************************************
 *   Waves platform Wallet App for Nano Ledger S. Updated By Waves community.
 *   Copyright (c) 2017-2018 Sergey Tolmachev (Tolsi) <tolsi.ru@gmail.com>
 * 
@@ -136,7 +136,7 @@ uint32_t set_result_sign() {
     public_key_le_to_be(&public_key);
 
     uint8_t signature[64];
-    lto_message_sign(&private_key, public_key.W, (unsigned char *) tmp_ctx.signing_context.buffer, tmp_ctx.signing_context.buffer_used, signature);
+    lto_message_sign(&private_key, (unsigned char *) tmp_ctx.signing_context.buffer, tmp_ctx.signing_context.buffer_used, signature);
 
     memmove((char *) G_io_apdu_buffer, signature, sizeof(signature));
 
@@ -342,7 +342,7 @@ void io_seproxyhal_display(const bagl_element_t *element) {
     io_seproxyhal_display_default((bagl_element_t *)element);
 }
 
-unsigned char io_event(unsigned char channel) {
+unsigned char io_event(unsigned char channel __attribute__((unused))) {
     // nothing done with the event, throw an error on the transport layer if
     // needed
     // can't have more than one tag in the reply, not supported yet.

@@ -7,6 +7,8 @@
 
 #if defined(TARGET_NANOS)
 unsigned int ui_verify_transfer_nanos_button(unsigned int button_mask, unsigned int button_mask_counter) {
+    UNUSED(button_mask_counter);
+
     switch (button_mask) {
         case BUTTON_EVT_RELEASED | BUTTON_LEFT: // CANCEL
             io_seproxyhal_cancel(NULL);
@@ -20,6 +22,8 @@ unsigned int ui_verify_transfer_nanos_button(unsigned int button_mask, unsigned 
 }
 
 unsigned int ui_verify_start_lease_nanos_button(unsigned int button_mask, unsigned int button_mask_counter) {
+    UNUSED(button_mask_counter);
+
     switch (button_mask) {
         case BUTTON_EVT_RELEASED | BUTTON_LEFT: // CANCEL
             io_seproxyhal_cancel(NULL);
@@ -33,6 +37,8 @@ unsigned int ui_verify_start_lease_nanos_button(unsigned int button_mask, unsign
 }
 
 unsigned int ui_verify_cancel_lease_nanos_button(unsigned int button_mask, unsigned int button_mask_counter) {
+    UNUSED(button_mask_counter);
+
     switch (button_mask) {
         case BUTTON_EVT_RELEASED | BUTTON_LEFT: // CANCEL
             io_seproxyhal_cancel(NULL);
@@ -46,6 +52,9 @@ unsigned int ui_verify_cancel_lease_nanos_button(unsigned int button_mask, unsig
 }
 
 unsigned int ui_verify_anchor_nanos_button(unsigned int button_mask, unsigned int button_mask_counter) {
+    UNUSED(button_mask_counter);
+
+
     switch (button_mask) {
         case BUTTON_EVT_RELEASED | BUTTON_LEFT: // CANCEL
             io_seproxyhal_cancel(NULL);
@@ -59,6 +68,8 @@ unsigned int ui_verify_anchor_nanos_button(unsigned int button_mask, unsigned in
 }
 
 unsigned int ui_verify_transaction_nanos_button(unsigned int button_mask, unsigned int button_mask_counter) {
+    UNUSED(button_mask_counter);
+
     switch (button_mask) {
         case BUTTON_EVT_RELEASED | BUTTON_LEFT: // CANCEL
             io_seproxyhal_cancel(NULL);
@@ -72,6 +83,8 @@ unsigned int ui_verify_transaction_nanos_button(unsigned int button_mask, unsign
 }
 
 unsigned int ui_address_nanos_button(unsigned int button_mask, unsigned int button_mask_counter) {
+    UNUSED(button_mask_counter);
+
     switch (button_mask) {
         case BUTTON_EVT_RELEASED | BUTTON_LEFT: // CANCEL
             io_seproxyhal_cancel(NULL);

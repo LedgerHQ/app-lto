@@ -2,7 +2,7 @@
 /*******************************************************************************
 *   LTO Network Wallet App for Ledger devices
 *   2019-2021 Ignacio Iglesias (iicc) https://github.com/iicc1/ledger-app-lto
-/*******************************************************************************
+********************************************************************************
 *   Burstcoin Wallet App for Nano Ledger S. Updated By Waves community.
 *   Copyright (c) 2017-2018 Jake B.
 * 

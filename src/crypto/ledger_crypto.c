@@ -1,6 +1,7 @@
 #include "ledger_crypto.h"
 #include "os.h"
 #include "cx.h"
+#include <string.h>
 
 // converts little endian 65 byte (0x4 32X 32Y) public key to 32 byte Y big endian form (for other applications)
 void public_key_le_to_be(cx_ecfp_public_key_t* public_key) {

@@ -55,7 +55,7 @@ typedef struct internal_storage_t {
 } internal_storage_t;
 
 extern internal_storage_t const N_storage_real;
-#define N_storage (*(volatile internal_storage_t *)PIC(&N_storage_real))
+#define N_storage (*(internal_storage_t *)PIC(&N_storage_real))
 
 // A place to store information about the transaction
 // for displaying to the user when requesting approval

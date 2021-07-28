@@ -4,6 +4,8 @@
 
 // UI
 unsigned int io_seproxyhal_touch_address_ok(const bagl_element_t *e) {
+    UNUSED(e);
+
     uint32_t tx = set_result_get_address();
     unsigned short sw = SW_OK;
 
@@ -21,6 +23,8 @@ unsigned int io_seproxyhal_touch_address_ok(const bagl_element_t *e) {
 }
 
 unsigned int io_seproxyhal_cancel(const bagl_element_t *e) {
+    UNUSED(e);
+
     uint32_t tx = 0;
 
     unsigned short sw = SW_USER_CANCELLED;
@@ -39,6 +43,8 @@ unsigned int io_seproxyhal_cancel(const bagl_element_t *e) {
 }
 
 unsigned int io_seproxyhal_touch_sign_approve(const bagl_element_t *e) {
+    UNUSED(e);
+
     // first 64 byte - signature
     uint32_t tx = set_result_sign();
     unsigned short sw = SW_OK;
@@ -56,7 +62,9 @@ unsigned int io_seproxyhal_touch_sign_approve(const bagl_element_t *e) {
 }
 
 unsigned int io_seproxyhal_touch_exit(const bagl_element_t *e) {
-    // Go back to the dashboard
+    UNUSED(e);
+
+   // Go back to the dashboard
     os_sched_exit(0);
     return 0; // do not redraw the widget
 }
