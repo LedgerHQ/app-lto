@@ -26,23 +26,11 @@
 #include "../glyphs.h"
 #include "../main.h"
 #include "../crypto/lto.h"
-#ifdef TARGET_NANOS
-#include "nanos/ui_menus_nanos.h"
-#include "nanos/ui_menus_buttons.h"
-#include "nanos/ui_menus_prepro.h"
-#endif
+#include "ui_menus.h"
 
-#ifdef TARGET_NANOX
-#include "nanox/ui_menus_nanox.h"
-#endif
-
-#ifdef TARGET_NANOX
 #include "ux.h"
 ux_state_t G_ux;
 bolos_ux_params_t G_ux_params;
-#else
-ux_state_t ux;
-#endif // TARGET_NANOX
 
 // UI currently displayed
 enum UI_STATE ui_state;
@@ -54,27 +42,18 @@ bool print_amount(uint64_t amount, int decimals, char *out, uint8_t len);
 void menu_address_init() {
     ux_step = 0;
     ux_step_count = 2;
-    #if defined(TARGET_NANOS)
-        UX_DISPLAY(ui_address_nanos, ui_address_prepro);
-    #elif defined(TARGET_NANOX)
-        // UX_DISPLAY(ui_address_nanos, ui_address_prepro);
-        ux_flow_init(0, ux_display_address_flow, NULL);
-    #endif // #if TARGET_ID
+    ux_flow_init(0, ux_display_address_flow, NULL);
 }
 
 // Idle state, show the menu
 void ui_idle() {
     ux_step = 0; ux_step_count = 0;
     ui_state = UI_IDLE;
-    #if defined(TARGET_NANOS)
-        UX_MENU_DISPLAY(0, menu_main, NULL);
-    #elif defined(TARGET_NANOX)
-        // reserve a display stack slot if none yet
-        if(G_ux.stack_count == 0) {
-            ux_stack_push();
-        }
-        ux_flow_init(0, ux_idle_flow, NULL);
-    #endif // #if TARGET_ID
+    // reserve a display stack slot if none yet
+    if(G_ux.stack_count == 0) {
+        ux_stack_push();
+    }
+    ux_flow_init(0, ux_idle_flow, NULL);
 }
 
 // Show the transaction details for the user to approve
@@ -155,11 +134,7 @@ void menu_sign_init() {
         ux_step = 0; ux_step_count = 7;
         ui_state = UI_VERIFY;
 
-        #if defined(TARGET_NANOS)
-            UX_DISPLAY(ui_verify_transfer_nanos, ui_verify_transfer_prepro);
-        #elif defined(TARGET_NANOX)
-            ux_flow_init(0, ux_transfer_flow, NULL);
-        #endif // #if TARGET_ID
+        ux_flow_init(0, ux_transfer_flow, NULL);
         return;
     
     // Start lease: https://docs.ltonetwork.com/protocol/public/transactions/lease-transaction
@@ -228,11 +203,7 @@ void menu_sign_init() {
 
         ux_step = 0; ux_step_count = 6;
         ui_state = UI_VERIFY;
-        #if defined(TARGET_NANOS)
-            UX_DISPLAY(ui_verify_start_lease_nanos, ui_verify_start_lease_prepro);
-        #elif defined(TARGET_NANOX)
-            ux_flow_init(0, ux_start_lease_flow, NULL);
-        #endif // #if TARGET_ID
+        ux_flow_init(0, ux_start_lease_flow, NULL);
         return;
 
     // Cancel lease: https://docs.ltonetwork.com/protocol/public/transactions/cancel-lease-transaction
@@ -274,11 +245,7 @@ void menu_sign_init() {
 
         ux_step = 0; ux_step_count = 4;
         ui_state = UI_VERIFY;
-        #if defined(TARGET_NANOS)
-            UX_DISPLAY(ui_verify_cancel_lease_nanos, ui_verify_cancel_lease_prepro);
-        #elif defined(TARGET_NANOX)
-            ux_flow_init(0, ux_cancel_lease_flow, NULL);
-        #endif // #if TARGET_ID
+        ux_flow_init(0, ux_cancel_lease_flow, NULL);
         return;
 
     // Anchor: https://docs.ltonetwork.com/protocol/public/transactions/anchor
@@ -332,11 +299,7 @@ void menu_sign_init() {
 
         ux_step = 0; ux_step_count = 4;
         ui_state = UI_VERIFY;
-        #if defined(TARGET_NANOS)
-            UX_DISPLAY(ui_verify_anchor_nanos, ui_verify_anchor_prepro);
-        #elif defined(TARGET_NANOX)
-            ux_flow_init(0, ux_anchor_flow, NULL);
-        #endif // #if TARGET_ID
+        ux_flow_init(0, ux_anchor_flow, NULL);
         return;
 
     // Other transaction types: https://docs.ltonetwork.com/protocol/public/transactions
@@ -383,11 +346,7 @@ void menu_sign_init() {
 
     ux_step = 0; ux_step_count = 3;
     ui_state = UI_VERIFY;
-    #if defined(TARGET_NANOS)
-        UX_DISPLAY(ui_verify_transaction_nanos, ui_verify_transaction_prepro);
-    #elif defined(TARGET_NANOX)
-        ux_flow_init(0, ux_verify_transaction_flow, NULL);
-    #endif // #if TARGET_ID
+    ux_flow_init(0, ux_verify_transaction_flow, NULL);
 }
 
 

@@ -88,7 +88,7 @@ typedef struct signingContext_t {
 
 // A place to store data during the confirming the address
 typedef struct addressesContext_t {
-	unsigned char address[36];
+	char address[36];
 	unsigned char public_key[32];
 } addressesContext_t;
 
