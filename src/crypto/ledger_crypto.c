@@ -15,7 +15,7 @@ void public_key_le_to_be(cx_ecfp_public_key_t* public_key) {
         public_key_be[31] |= 0x80;
     }
     memset(public_key->W, 0, 65);
-    memmove(public_key->W, public_key_be, 32);
+    memcpy(public_key->W, public_key_be, 32);
 }
 
 void get_keypair_by_path(const uint32_t* path, cx_ecfp_public_key_t* public_key, cx_ecfp_private_key_t* private_key) {

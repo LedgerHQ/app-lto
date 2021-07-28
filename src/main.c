@@ -114,7 +114,7 @@ void add_chunk_data() {
 
         // Update the other data from this segment
         int data_size = G_io_apdu_buffer[4] - 24;
-        memmove((char *) tmp_ctx.signing_context.buffer, &G_io_apdu_buffer[29], data_size);
+        memcpy(tmp_ctx.signing_context.buffer, &G_io_apdu_buffer[29], data_size);
         tmp_ctx.signing_context.buffer_used += data_size;
     } else {
         // else update the data from entire segment.
@@ -122,7 +122,7 @@ void add_chunk_data() {
         if (tmp_ctx.signing_context.buffer_used + data_size > MAX_DATA_SIZE) {
             THROW(SW_BUFFER_OVERFLOW);
         }
-        memmove((char *) &tmp_ctx.signing_context.buffer[tmp_ctx.signing_context.buffer_used], &G_io_apdu_buffer[5], data_size);
+        memcpy(&tmp_ctx.signing_context.buffer[tmp_ctx.signing_context.buffer_used], &G_io_apdu_buffer[5], data_size);
         tmp_ctx.signing_context.buffer_used += data_size;
     }
 }
@@ -136,9 +136,9 @@ uint32_t set_result_sign() {
     public_key_le_to_be(&public_key);
 
     uint8_t signature[64];
-    lto_message_sign(&private_key, (unsigned char *) tmp_ctx.signing_context.buffer, tmp_ctx.signing_context.buffer_used, signature);
+    lto_message_sign(&private_key, tmp_ctx.signing_context.buffer, tmp_ctx.signing_context.buffer_used, signature);
 
-    memmove((char *) G_io_apdu_buffer, signature, sizeof(signature));
+    memcpy(G_io_apdu_buffer, signature, sizeof(signature));
 
     // reset all private stuff
     memset(&private_key, 0, sizeof(cx_ecfp_private_key_t));
@@ -148,8 +148,8 @@ uint32_t set_result_sign() {
 }
 
 uint32_t set_result_get_address() {
-    memmove((char *) G_io_apdu_buffer, (char *) tmp_ctx.address_context.public_key, 32);
-    memmove((char *) G_io_apdu_buffer + 32, (char *) tmp_ctx.address_context.address, 35);
+    memcpy(G_io_apdu_buffer, tmp_ctx.address_context.public_key, 32);
+    memcpy(G_io_apdu_buffer + 32, tmp_ctx.address_context.address, 35);
     return 67;
 }
 
@@ -215,11 +215,11 @@ void handle_apdu(volatile unsigned int *flags, volatile unsigned int *tx, volati
 
                 get_ed25519_public_key_for_path(path, &public_key);
 
-                unsigned char address[35];
+                char address[35];
                 lto_public_key_to_address(public_key.W, G_io_apdu_buffer[3], address);
 
-                memmove((char *) tmp_ctx.address_context.public_key, public_key.W, 32);
-                memmove((char *) tmp_ctx.address_context.address, address, 35);
+                memcpy(tmp_ctx.address_context.public_key, public_key.W, 32);
+                memcpy(tmp_ctx.address_context.address, address, 35);
                 // term byte for string shown
                 tmp_ctx.address_context.address[35] = '\0';
 

@@ -14,7 +14,7 @@ void lto_message_sign(const cx_ecfp_private_key_t *private_key, const unsigned c
 }
 
 // Build lto address from the ed25519 public key
-void lto_public_key_to_address(const ed25519_public_key public_key, const unsigned char network_byte, unsigned char *output) {
+void lto_public_key_to_address(const ed25519_public_key public_key, const unsigned char network_byte, char *output) {
     uint8_t public_key_hash[32];
     uint8_t address[26];
     uint8_t checksum[32];
@@ -25,18 +25,21 @@ void lto_public_key_to_address(const ed25519_public_key public_key, const unsign
     address[0] = 0x01;
     address[1] = network_byte;
 
-    memmove(&address[2], public_key_hash, 20);
+    memcpy(&address[2], public_key_hash, 20);
 
     lto_secure_hash(address, 22, checksum);
 
-    memmove(&address[22], checksum, 4);
+    memcpy(&address[22], checksum, 4);
 
     size_t length = 36;
-    b58enc((char *) output, &length, address, 26);
+    b58enc(output, &length, address, 26);
 }
 
-void copy_in_reverse_order(unsigned char *to, const unsigned char *from, const unsigned int len) {
-    for (uint16_t i = 0; i < len; i++) {
-        to[i] = from[(len - 1) - i];
+void copy_in_reverse_order(void *to, const void *from, const size_t len) {
+    uint8_t *dst = to;
+    const uint8_t *src = from;
+
+    for (unsigned i = 0; i < len; i++) {
+        dst[i] = src[(len - 1) - i];
     }
-}
+}    
