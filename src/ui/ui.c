@@ -149,7 +149,7 @@ void menu_sign_init() {
 
         // Attachment - depends on the value of attachment size
         memmove((unsigned char *) ui_context.line4, (const unsigned char *) &tmp_ctx.signing_context.buffer[processed], attachment_size);
-        processed += attachment_size;
+        // processed += attachment_size;
 
         // Transaction id
         unsigned char id[32];
@@ -215,10 +215,10 @@ void menu_sign_init() {
         uint64_t fee = 0;
         copy_in_reverse_order((unsigned char *) &fee, (unsigned char *) &tmp_ctx.signing_context.buffer[processed], 8);
         print_amount(fee, tmp_ctx.signing_context.fee_decimals, (unsigned char*) ui_context.line4, 45);
-        processed += 8;
+        // processed += 8;
 
         // Timestamp - 8 bytes
-        processed += 8;
+        // processed += 8;
         
         // Transaction id
         memmove(&ui_context.line5, &"Transaction Id\0", 15);
@@ -266,7 +266,7 @@ void menu_sign_init() {
         uint64_t fee = 0;
         copy_in_reverse_order((unsigned char *) &fee, (unsigned char *) &tmp_ctx.signing_context.buffer[processed], 8);
         print_amount(fee, tmp_ctx.signing_context.fee_decimals, (unsigned char*) ui_context.line2, 45);
-        processed += 8;
+        // processed += 8;
         
         // Transaction id
         memmove(&ui_context.line3, &"Transaction Id\0", 15);
@@ -326,7 +326,7 @@ void menu_sign_init() {
         uint64_t fee = 0;
         copy_in_reverse_order((unsigned char *) &fee, (unsigned char *) &tmp_ctx.signing_context.buffer[processed], 8);
         print_amount(fee, tmp_ctx.signing_context.fee_decimals, (unsigned char*) ui_context.line2, 45);
-        processed += 8;
+        // processed += 8;
         
         // Transaction id
         memmove(&ui_context.line3, &"Transaction Id\0", 15);
