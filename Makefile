@@ -39,7 +39,7 @@ else
 	endif
 endif
 
-APP_LOAD_PARAMS = --appFlags 0x240 --path "44'/353'" --curve secp256k1 --curve ed25519 $(COMMON_LOAD_PARAMS)
+APP_LOAD_PARAMS = --appFlags 0x240 --path "44'/353'" --curve ed25519 $(COMMON_LOAD_PARAMS)
 
 # Ledger: add the "Pending security review" disclaimer
 APP_LOAD_PARAMS += --tlvraw 9F:01
