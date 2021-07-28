@@ -36,7 +36,7 @@ void get_ed25519_public_key_for_path(const uint32_t* path, cx_ecfp_public_key_t*
     // derive the ed25519 keys by that BIP32 path from the device
     get_keypair_by_path(path, public_key, &private_key);
     // clean private key
-    memset(private_key.d, 0, 32);
+    explicit_bzero(private_key.d, 32);
 
     public_key_le_to_be(public_key);
 }

@@ -141,7 +141,7 @@ uint32_t set_result_sign() {
     memcpy(G_io_apdu_buffer, signature, sizeof(signature));
 
     // reset all private stuff
-    memset(&private_key, 0, sizeof(cx_ecfp_private_key_t));
+    explicit_bzero(&private_key, sizeof(cx_ecfp_private_key_t));
     memset(&public_key, 0, sizeof(cx_ecfp_public_key_t));
 
     return 64;
