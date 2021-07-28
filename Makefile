@@ -29,14 +29,10 @@ APPVERSION_P=0
 APPNAME = "LTO Network"
 APPVERSION = $(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
 
-ifeq ($(TARGET_NAME),TARGET_BLUE)
-	ICONNAME=blue_app_lto.gif
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+	ICONNAME=nanox_app_lto.gif
 else
-	ifeq ($(TARGET_NAME),TARGET_NANOX)
-		ICONNAME=nanox_app_lto.gif
-	else
-		ICONNAME=nanos_app_lto.gif
-	endif
+	ICONNAME=nanos_app_lto.gif
 endif
 
 APP_LOAD_PARAMS = --appFlags 0x240 --path "44'/353'" --curve ed25519 $(COMMON_LOAD_PARAMS)

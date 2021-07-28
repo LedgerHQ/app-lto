@@ -43,8 +43,8 @@ internal_storage_t const N_storage_real;
 // SPI Buffer for io_event
 unsigned char G_io_seproxyhal_spi_buffer[IO_SEPROXYHAL_BUFFER_SIZE_B];
 
-#if !defined(TARGET_NANOS) && !defined(TARGET_BLUE) && !defined(TARGET_NANOX)
-#error This application only supports the Ledger Nano S, Nano X and the Ledger Blue
+#if !defined(TARGET_NANOS) && !defined(TARGET_NANOX)
+#error This application only supports the Ledger Nano S and Nano X
 #endif
 
 unsigned short io_exchange_al(unsigned char channel, unsigned short tx_len) {
@@ -435,11 +435,6 @@ __attribute__((section(".boot"))) int main(void) {
                 BLE_power(0, NULL);
                 BLE_power(1, "Nano X");
 #endif // HAVE_BLE
-
-                // set menu bar colour for blue
-#if defined(TARGET_BLUE)
-                UX_SET_STATUS_BAR_COLOR(COLOR_BG_1, COLOR_APP);
-#endif // #if TARGET_ID
 
                 lto_main();
             }
