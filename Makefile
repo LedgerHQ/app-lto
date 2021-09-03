@@ -29,17 +29,13 @@ APPVERSION_P=0
 APPNAME = "LTO Network"
 APPVERSION = $(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
 
-ifeq ($(TARGET_NAME),TARGET_BLUE)
-	ICONNAME=blue_app_lto.gif
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+	ICONNAME=nanox_app_lto.gif
 else
-	ifeq ($(TARGET_NAME),TARGET_NANOX)
-		ICONNAME=nanox_app_lto.gif
-	else
-		ICONNAME=nanos_app_lto.gif
-	endif
+	ICONNAME=nanos_app_lto.gif
 endif
 
-APP_LOAD_PARAMS = --appFlags 0x240 --path "44'/353'" --curve secp256k1 --curve ed25519 $(COMMON_LOAD_PARAMS)
+APP_LOAD_PARAMS = --appFlags 0x240 --path "44'/353'" --curve ed25519 $(COMMON_LOAD_PARAMS)
 
 # Ledger: add the "Pending security review" disclaimer
 APP_LOAD_PARAMS += --tlvraw 9F:01
@@ -80,6 +76,7 @@ DEFINES   += MAX_DATA_SIZE=650
 WEBUSB_URL     = www.ledgerwallet.com
 DEFINES       += HAVE_WEBUSB WEBUSB_URL_SIZE_B=$(shell echo -n $(WEBUSB_URL) | wc -c) WEBUSB_URL=$(shell echo -n $(WEBUSB_URL) | sed -e "s/./\\\'\0\\\',/g")
 
+DEFINES   += HAVE_UX_FLOW
 
 ifeq ($(TARGET_NAME),TARGET_NANOX)
 DEFINES   += IO_SEPROXYHAL_BUFFER_SIZE_B=300
@@ -92,7 +89,6 @@ DEFINES       += HAVE_BAGL_ELLIPSIS # long label truncation feature
 DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_REGULAR_11PX
 DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_EXTRABOLD_11PX
 DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_LIGHT_16PX
-DEFINES		  += HAVE_UX_FLOW
 else
 DEFINES   += IO_SEPROXYHAL_BUFFER_SIZE_B=128
 endif

@@ -55,20 +55,20 @@ typedef struct internal_storage_t {
 } internal_storage_t;
 
 extern internal_storage_t const N_storage_real;
-#define N_storage (*(volatile internal_storage_t *)PIC(&N_storage_real))
+#define N_storage (*(internal_storage_t *)PIC(&N_storage_real))
 
 // A place to store information about the transaction
 // for displaying to the user when requesting approval
 // 44 for address/id and +1 for \0
 typedef struct uiContext_t {
-	unsigned char line1[45];
-	unsigned char line2[45];
-	unsigned char line3[45];
-	unsigned char line4[45];
-	unsigned char line5[45];
-	unsigned char line6[45];
-	unsigned char line7[45];
-	unsigned char line8[45];
+	char line1[45];
+	char line2[45];
+	char line3[45];
+	char line4[45];
+	char line5[45];
+	char line6[45];
+	char line7[45];
+	char line8[45];
 } uiContext_t;
 
 // A place to store data during the signing
@@ -88,7 +88,7 @@ typedef struct signingContext_t {
 
 // A place to store data during the confirming the address
 typedef struct addressesContext_t {
-	unsigned char address[36];
+	char address[36];
 	unsigned char public_key[32];
 } addressesContext_t;
 

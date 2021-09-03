@@ -3,10 +3,9 @@
 
 #include "os.h"
 
-#if defined(TARGET_NANOX)
-
 #include "cx.h"
 #include "ux.h"
+#include "ui_logic.h"
 
 // Helper function to display attachments
 void display_if_buffer_not_empty(char* buffer, size_t buffer_len){
@@ -73,7 +72,7 @@ UX_STEP_NOCB(
     bnnn_paging,
     {
       .title = "Address",
-      .text = (const char *)tmp_ctx.address_context.address,
+      .text = tmp_ctx.address_context.address,
     });
 UX_STEP_VALID(
     ux_display_address_flow_5_step,
@@ -113,21 +112,21 @@ UX_STEP_NOCB(
     bnnn_paging,
     {
       .title = "Amount (LTO)",
-      .text = (const char *)ui_context.line1,
+      .text = ui_context.line1,
     });
 UX_STEP_NOCB(
     ux_transfer_3_step,
     bnnn_paging,
     {
       .title = "To",
-      .text = (const char *)ui_context.line2,
+      .text = ui_context.line2,
     });
 UX_STEP_NOCB(
     ux_transfer_4_step,
     bnnn_paging,
     {
       .title = "Fees (LTO)",
-      .text = (const char *)ui_context.line3,
+      .text = ui_context.line3,
     });
 UX_STEP_NOCB_INIT(
     ux_transfer_5_step,
@@ -135,21 +134,21 @@ UX_STEP_NOCB_INIT(
     display_if_buffer_not_empty(ui_context.line4, sizeof(ui_context.line4)),
     {
       .title = "Attachment",
-      .text = (const char *)ui_context.line4,
+      .text = ui_context.line4,
     });
 UX_STEP_NOCB(
     ux_transfer_6_step,
     bnnn_paging,
     {
       .title = "From",
-      .text = (const char *)ui_context.line5,
+      .text = ui_context.line5,
     });
 UX_STEP_NOCB(
     ux_transfer_7_step,
     bnnn_paging,
     {
       .title = "Transaction Id",
-      .text = (const char *)ui_context.line6,
+      .text = ui_context.line6,
     });
 UX_STEP_VALID(
     ux_transfer_8_step,
@@ -187,42 +186,42 @@ UX_STEP_NOCB(
     bnnn_paging, 
     {
       .title = "Confirm",
-      .text = (const char *) ui_context.line1
+      .text = ui_context.line1
     });
 UX_STEP_NOCB(
     ux_start_lease_2_step, 
     bnnn_paging, 
     {
       .title = "To",
-      .text = (const char *) ui_context.line2,
+      .text = ui_context.line2,
     });
 UX_STEP_NOCB(
     ux_start_lease_3_step, 
     bnnn_paging, 
     {
       .title = "Lease Amount (LTO)",
-      .text = (const char *) ui_context.line3,
+      .text = ui_context.line3,
     });
 UX_STEP_NOCB(
     ux_start_lease_4_step, 
     bnnn_paging, 
     {
       .title = "Fees (LTO)",
-      .text = (const char *) ui_context.line4,
+      .text = ui_context.line4,
     });
 UX_STEP_NOCB(
     ux_start_lease_5_step, 
     bnnn_paging, 
     {
-      .title =(const char *) ui_context.line5,
-      .text = (const char *) ui_context.line6,
+      .title = ui_context.line5,
+      .text =  ui_context.line6,
     });
 UX_STEP_NOCB(
     ux_start_lease_6_step, 
     bnnn_paging, 
     {
       .title = "From",
-      .text = (const char *) ui_context.line7,
+      .text = ui_context.line7,
     });
 UX_STEP_VALID(
     ux_start_lease_7_step, 
@@ -259,28 +258,28 @@ UX_STEP_NOCB(
     bnnn_paging, 
     {
       .title = "Confirm",
-      .text = (const char *) ui_context.line1
+      .text = ui_context.line1
     });
 UX_STEP_NOCB(
     ux_cancel_lease_2_step, 
     bnnn_paging, 
     {
       .title = "Fees (LTO)",
-      .text = (const char *) ui_context.line2,
+      .text = ui_context.line2,
     });
 UX_STEP_NOCB(
     ux_cancel_lease_3_step, 
     bnnn_paging, 
     {
-      .title =(const char *) ui_context.line3,
-      .text = (const char *) ui_context.line4,
+      .title = ui_context.line3,
+      .text = ui_context.line4,
     });
 UX_STEP_NOCB(
     ux_cancel_lease_4_step, 
     bnnn_paging, 
     {
       .title = "From",
-      .text = (const char *) ui_context.line5,
+      .text = ui_context.line5,
     });
 UX_STEP_VALID(
     ux_cancel_lease_5_step, 
@@ -315,28 +314,28 @@ UX_STEP_NOCB(
     bnnn_paging, 
     {
       .title = "Confirm",
-      .text = (const char *) ui_context.line1
+      .text = ui_context.line1
     });
 UX_STEP_NOCB(
     ux_anchor_2_step, 
     bnnn_paging, 
     {
       .title = "Fees (LTO)",
-      .text = (const char *) ui_context.line2,
+      .text = ui_context.line2,
     });
 UX_STEP_NOCB(
     ux_anchor_3_step, 
     bnnn_paging, 
     {
-      .title =(const char *) ui_context.line3,
-      .text = (const char *) ui_context.line4,
+      .title =ui_context.line3,
+      .text = ui_context.line4,
     });
 UX_STEP_NOCB(
     ux_anchor_4_step, 
     bnnn_paging, 
     {
       .title = "From",
-      .text = (const char *) ui_context.line5,
+      .text = ui_context.line5,
     });
 UX_STEP_VALID(
     ux_anchor_5_step, 
@@ -371,21 +370,21 @@ UX_STEP_NOCB(
     bnnn_paging, 
     {
       .title = "Confirm",
-      .text = (const char *) ui_context.line1
+      .text = ui_context.line1
     });
 UX_STEP_NOCB(
     ux_verify_transaction_2_step, 
     bnnn_paging, 
     {
-      .title =(const char *) ui_context.line2,
-      .text = (const char *) ui_context.line3,
+      .title = ui_context.line2,
+      .text = ui_context.line3,
     });
 UX_STEP_NOCB(
     ux_verify_transaction_3_step, 
     bnnn_paging, 
     {
       .title = "From",
-      .text = (const char *) ui_context.line4,
+      .text = ui_context.line4,
     });
 UX_STEP_VALID(
     ux_verify_transaction_4_step, 
@@ -412,7 +411,5 @@ UX_FLOW(ux_verify_transaction_flow,
   &ux_verify_transaction_4_step,
   &ux_verify_transaction_5_step
 );
-
-#endif
 
 #endif

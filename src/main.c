@@ -1,7 +1,7 @@
 /*******************************************************************************
 *   LTO Network Wallet App for Ledger devices, based on Waves code.
 *   2019-2021 Ignacio Iglesias (iicc) https://github.com/iicc1/ledger-app-lto
-/*******************************************************************************
+********************************************************************************
 *   Waves platform Wallet App for Nano Ledger S. Updated By Waves community.
 *   Copyright (c) 2017-2018 Sergey Tolmachev (Tolsi) <tolsi.ru@gmail.com>
 * 
@@ -43,8 +43,8 @@ internal_storage_t const N_storage_real;
 // SPI Buffer for io_event
 unsigned char G_io_seproxyhal_spi_buffer[IO_SEPROXYHAL_BUFFER_SIZE_B];
 
-#if !defined(TARGET_NANOS) && !defined(TARGET_BLUE) && !defined(TARGET_NANOX)
-#error This application only supports the Ledger Nano S, Nano X and the Ledger Blue
+#if !defined(TARGET_NANOS) && !defined(TARGET_NANOX)
+#error This application only supports the Ledger Nano S and Nano X
 #endif
 
 unsigned short io_exchange_al(unsigned char channel, unsigned short tx_len) {
@@ -114,7 +114,7 @@ void add_chunk_data() {
 
         // Update the other data from this segment
         int data_size = G_io_apdu_buffer[4] - 24;
-        memmove((char *) tmp_ctx.signing_context.buffer, &G_io_apdu_buffer[29], data_size);
+        memcpy(tmp_ctx.signing_context.buffer, &G_io_apdu_buffer[29], data_size);
         tmp_ctx.signing_context.buffer_used += data_size;
     } else {
         // else update the data from entire segment.
@@ -122,7 +122,7 @@ void add_chunk_data() {
         if (tmp_ctx.signing_context.buffer_used + data_size > MAX_DATA_SIZE) {
             THROW(SW_BUFFER_OVERFLOW);
         }
-        memmove((char *) &tmp_ctx.signing_context.buffer[tmp_ctx.signing_context.buffer_used], &G_io_apdu_buffer[5], data_size);
+        memcpy(&tmp_ctx.signing_context.buffer[tmp_ctx.signing_context.buffer_used], &G_io_apdu_buffer[5], data_size);
         tmp_ctx.signing_context.buffer_used += data_size;
     }
 }
@@ -136,20 +136,20 @@ uint32_t set_result_sign() {
     public_key_le_to_be(&public_key);
 
     uint8_t signature[64];
-    lto_message_sign(&private_key, public_key.W, (unsigned char *) tmp_ctx.signing_context.buffer, tmp_ctx.signing_context.buffer_used, signature);
+    lto_message_sign(&private_key, tmp_ctx.signing_context.buffer, tmp_ctx.signing_context.buffer_used, signature);
 
-    memmove((char *) G_io_apdu_buffer, signature, sizeof(signature));
+    memcpy(G_io_apdu_buffer, signature, sizeof(signature));
 
     // reset all private stuff
-    memset(&private_key, 0, sizeof(cx_ecfp_private_key_t));
+    explicit_bzero(&private_key, sizeof(cx_ecfp_private_key_t));
     memset(&public_key, 0, sizeof(cx_ecfp_public_key_t));
 
     return 64;
 }
 
 uint32_t set_result_get_address() {
-    memmove((char *) G_io_apdu_buffer, (char *) tmp_ctx.address_context.public_key, 32);
-    memmove((char *) G_io_apdu_buffer + 32, (char *) tmp_ctx.address_context.address, 35);
+    memcpy(G_io_apdu_buffer, tmp_ctx.address_context.public_key, 32);
+    memcpy(G_io_apdu_buffer + 32, tmp_ctx.address_context.address, 35);
     return 67;
 }
 
@@ -215,11 +215,11 @@ void handle_apdu(volatile unsigned int *flags, volatile unsigned int *tx, volati
 
                 get_ed25519_public_key_for_path(path, &public_key);
 
-                unsigned char address[35];
+                char address[35];
                 lto_public_key_to_address(public_key.W, G_io_apdu_buffer[3], address);
 
-                memmove((char *) tmp_ctx.address_context.public_key, public_key.W, 32);
-                memmove((char *) tmp_ctx.address_context.address, address, 35);
+                memcpy(tmp_ctx.address_context.public_key, public_key.W, 32);
+                memcpy(tmp_ctx.address_context.address, address, 35);
                 // term byte for string shown
                 tmp_ctx.address_context.address[35] = '\0';
 
@@ -342,7 +342,7 @@ void io_seproxyhal_display(const bagl_element_t *element) {
     io_seproxyhal_display_default((bagl_element_t *)element);
 }
 
-unsigned char io_event(unsigned char channel) {
+unsigned char io_event(unsigned char channel __attribute__((unused))) {
     // nothing done with the event, throw an error on the transport layer if
     // needed
     // can't have more than one tag in the reply, not supported yet.
@@ -435,11 +435,6 @@ __attribute__((section(".boot"))) int main(void) {
                 BLE_power(0, NULL);
                 BLE_power(1, "Nano X");
 #endif // HAVE_BLE
-
-                // set menu bar colour for blue
-#if defined(TARGET_BLUE)
-                UX_SET_STATUS_BAR_COLOR(COLOR_BG_1, COLOR_APP);
-#endif // #if TARGET_ID
 
                 lto_main();
             }
