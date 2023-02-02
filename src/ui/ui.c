@@ -23,7 +23,7 @@
 
 #include "ui.h"
 #include <stdbool.h>
-#include "../glyphs.h"
+#include "glyphs.h"
 #include "../main.h"
 #include "../crypto/lto.h"
 #include "ui_menus.h"
